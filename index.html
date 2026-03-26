@@ -325,14 +325,14 @@
   .exp-card {
     background: var(--surface); border: 1px solid var(--border);
     border-radius: 14px; padding: 28px 32px;
-    display: grid; grid-template-columns: auto 1fr; gap: 24px;
+    display: grid; grid-template-columns: 120px 1fr; gap: 24px;
     transition: border-color 0.3s;
   }
   .exp-card:hover { border-color: rgba(124,58,237,0.4); }
   .exp-year {
     font-family: var(--mono); font-size: 11px; color: var(--text-muted);
-    letter-spacing: 0.1em; writing-mode: vertical-lr;
-    text-orientation: mixed; align-self: start; padding-top: 4px;
+    letter-spacing: 0.06em; align-self: start; padding-top: 6px;
+    line-height: 1.6; white-space: nowrap;
   }
   .exp-content {}
   .exp-title {
@@ -503,9 +503,9 @@
     /* skill bars full width on mobile */
     .skill-pill-bar { max-width: 60px; }
 
-    /* experience card stacks vertically */
-    .exp-card { grid-template-columns: 1fr; gap: 8px; }
-    .exp-year { writing-mode: horizontal-tb; font-size: 11px; color: var(--purple); }
+    /* experience card stacks vertically on mobile */
+    .exp-card { grid-template-columns: 1fr; gap: 4px; }
+    .exp-year { font-size: 11px; color: var(--purple); padding-top: 0; }
   }
 </style>
 </head>
@@ -794,7 +794,7 @@
     <div class="experience-list">
 
       <div class="exp-card reveal">
-        <div class="exp-year">10.2021<br>04.2022</div>
+        <div class="exp-year">10.2021 —<br>04.2022</div>
         <div class="exp-content">
           <div class="exp-title" data-tip="Outsourced via SupportYourApp">Technical Support Agent — Netspark VPN</div>
           <div class="exp-company">SupportYourApp · Remote & Office · International Team</div>
@@ -808,7 +808,7 @@
       </div>
 
       <div class="exp-card reveal">
-        <div class="exp-year">2024 &<br>2025</div>
+        <div class="exp-year">2024 —<br>2025</div>
         <div class="exp-content">
           <div class="exp-title" data-tip="Part-time student work in Berlin">Housekeeper (Werkstudent)</div>
           <div class="exp-company">Two Hotel Properties · Part-time · Berlin</div>
