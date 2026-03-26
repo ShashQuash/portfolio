@@ -483,6 +483,29 @@
     .hero-terminal { display: none; }
     .section-wrap { padding: 60px 24px; }
     .projects-grid, .skills-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; }
+
+    /* hide custom cursor on touch devices - no mouse needed */
+    .cursor-pixel { display: none; }
+    body { cursor: auto; }
+    .btn-primary, .btn-ghost, .project-card,
+    .form-input, .form-textarea, .contact-link { cursor: pointer; }
+
+    /* tooltips don't work on touch so hide them */
+    [data-tip]::before, [data-tip]::after { display: none; }
+
+    /* hero name slightly smaller on phones */
+    .hero-name { font-size: 36px; }
+
+    /* project tags wrap better on small screens */
+    .project-tags { gap: 6px; }
+    .tag { font-size: 10px; padding: 3px 8px; }
+
+    /* skill bars full width on mobile */
+    .skill-pill-bar { max-width: 60px; }
+
+    /* experience card stacks vertically */
+    .exp-card { grid-template-columns: 1fr; gap: 8px; }
+    .exp-year { writing-mode: horizontal-tb; font-size: 11px; color: var(--purple); }
   }
 </style>
 </head>
@@ -946,28 +969,32 @@ setInterval(drawMatrix, 40);
 // custom cursor logic
 // tracks mouse position and moves the pixel arrow
 // adds clicking class on mousedown for the spin effect
+// disabled on touch devices since there's no mouse
 const pixelCursor = document.getElementById('cursor-pixel');
+const isTouchDevice = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
 
-document.addEventListener('mousemove', e => {
-  pixelCursor.style.left = e.clientX + 'px';
-  pixelCursor.style.top = e.clientY + 'px';
-});
+if (!isTouchDevice) {
+  document.addEventListener('mousemove', e => {
+    pixelCursor.style.left = e.clientX + 'px';
+    pixelCursor.style.top = e.clientY + 'px';
+  });
 
-document.addEventListener('mousedown', () => {
-  pixelCursor.classList.add('clicking');
-});
+  document.addEventListener('mousedown', () => {
+    pixelCursor.classList.add('clicking');
+  });
 
-document.addEventListener('mouseup', () => {
-  pixelCursor.classList.remove('clicking');
-});
+  document.addEventListener('mouseup', () => {
+    pixelCursor.classList.remove('clicking');
+  });
 
-document.addEventListener('mouseleave', () => {
-  pixelCursor.style.opacity = '0';
-});
+  document.addEventListener('mouseleave', () => {
+    pixelCursor.style.opacity = '0';
+  });
 
-document.addEventListener('mouseenter', () => {
-  pixelCursor.style.opacity = '1';
-});
+  document.addEventListener('mouseenter', () => {
+    pixelCursor.style.opacity = '1';
+  });
+}
 
 // scroll reveal
 // watches elements with .reveal class
