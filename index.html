@@ -92,6 +92,45 @@
   .nav-links a:hover { color: var(--purple-glow); }
   .nav-links a:hover::after { width: 100%; }
 
+  /* hamburger button - only shows on mobile */
+  .nav-hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    cursor: pointer; padding: 4px; z-index: 200;
+    background: none; border: none;
+  }
+  .nav-hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--purple-glow); border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  .nav-hamburger.open span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .nav-hamburger.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-hamburger.open span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+
+  /* mobile dropdown menu */
+  .nav-mobile {
+    display: none; position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10,6,16,0.97);
+    backdrop-filter: blur(16px);
+    z-index: 150; flex-direction: column;
+    align-items: center; justify-content: center; gap: 32px;
+  }
+  .nav-mobile.open { display: flex; }
+  .nav-mobile a {
+    font-family: var(--mono); font-size: 20px;
+    color: var(--text-dim); text-decoration: none;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-mobile a:hover { color: var(--purple-glow); }
+
   /* tooltips drop downward on hover - z-index 9999 so they never hide behind stuff */
   [data-tip] { position: relative; }
   [data-tip]::before {
@@ -418,6 +457,14 @@
     transition: border-color 0.2s;
   }
   .lang-pill:hover { border-color: var(--purple); }
+  .flag {
+    font-family: "Segoe UI Emoji", "Apple Color Emoji",
+                 "Noto Color Emoji", "Twemoji Mozilla",
+                 "EmojiOne Color", sans-serif !important;
+    font-size: 20px; line-height: 1;
+    font-style: normal;
+    display: inline-block;
+  }
   .lang-level {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
     color: var(--purple-light); padding: 2px 8px;
@@ -493,8 +540,15 @@
   @media (max-width: 768px) {
     nav { padding: 16px 24px; }
     .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
     .hero-inner { grid-template-columns: 1fr; }
-    .hero-terminal { display: none; }
+    .hero-terminal {
+      display: block;
+      width: 100%;
+      font-size: 11.5px;
+      padding: 18px;
+      margin-top: 8px;
+    }
     .section-wrap { padding: 60px 24px; }
     .projects-grid, .skills-grid, .edu-grid, .contact-grid { grid-template-columns: 1fr; }
 
@@ -507,8 +561,9 @@
     /* tooltips don't work on touch so hide them */
     [data-tip]::before, [data-tip]::after { display: none; }
 
-    /* hero name slightly smaller on phones */
-    .hero-name { font-size: 36px; }
+    #hero { padding: 100px 24px 60px; }
+    .hero-actions { flex-direction: column; }
+    .btn-primary, .btn-ghost { justify-content: center; }
 
     /* project tags wrap better on small screens */
     .project-tags { gap: 6px; }
@@ -573,7 +628,31 @@
     <a href="#education" data-tip="Where I study">Education</a>
     <a href="#contact" data-tip="Let's connect">Contact</a>
   </div>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
 </nav>
+
+<!-- full screen mobile menu -->
+<div class="nav-mobile" id="mobileMenu">
+  <button onclick="closeMenu()" style="
+    position: absolute; top: 20px; right: 24px;
+    background: none; border: none; cursor: pointer;
+    font-family: var(--mono); font-size: 13px;
+    color: var(--text-muted); letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 8px;
+  ">
+    ✕ CLOSE
+  </button>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#projects" onclick="closeMenu()">Projects</a>
+  <a href="#skills" onclick="closeMenu()">Skills</a>
+  <a href="#experience" onclick="closeMenu()">Experience</a>
+  <a href="#education" onclick="closeMenu()">Education</a>
+  <a href="#contact" onclick="closeMenu()">Contact</a>
+</div>
 
 <!-- hero section - name, bio, buttons and terminal card -->
 <section id="about"></section>
@@ -753,9 +832,37 @@
 
     <!-- languages spoken -->
     <div class="lang-row reveal" style="margin-top: 32px;">
-      <div class="lang-pill"><span>🇮🇳</span> Hindi <span class="lang-level">Native</span></div>
-      <div class="lang-pill"><span>🇬🇧</span> English <span class="lang-level">C1</span></div>
-      <div class="lang-pill"><span>🇩🇪</span> German <span class="lang-level">A2 → B1</span></div>
+      <div class="lang-pill">
+        <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:3px;flex-shrink:0;">
+          <!-- India flag -->
+          <rect width="24" height="16" fill="#fff"/>
+          <rect width="24" height="5.33" fill="#FF9933"/>
+          <rect y="10.67" width="24" height="5.33" fill="#138808"/>
+          <circle cx="12" cy="8" r="2.5" fill="none" stroke="#000080" stroke-width="0.5"/>
+          <circle cx="12" cy="8" r="0.5" fill="#000080"/>
+        </svg>
+        Hindi <span class="lang-level">Native</span>
+      </div>
+      <div class="lang-pill">
+        <svg width="24" height="16" viewBox="0 0 60 40" style="border-radius:3px;flex-shrink:0;">
+          <!-- UK flag -->
+          <rect width="60" height="40" fill="#012169"/>
+          <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+          <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="5"/>
+          <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+          <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="8"/>
+        </svg>
+        English <span class="lang-level">C1</span>
+      </div>
+      <div class="lang-pill">
+        <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:3px;flex-shrink:0;">
+          <!-- Germany flag -->
+          <rect width="24" height="16" fill="#FFCE00"/>
+          <rect width="24" height="5.33" fill="#000"/>
+          <rect y="5.33" width="24" height="5.33" fill="#DD0000"/>
+        </svg>
+        German <span class="lang-level">A2 → B1</span>
+      </div>
     </div>
   </div>
 </section>
@@ -982,11 +1089,15 @@ if (!isTouchDevice) {
 
 // scroll reveal
 // watches elements with .reveal class
-// adds .visible when they scroll into view
+// adds .visible when scrolled into view, removes when out of view
+// this means animation repeats every time you scroll past an element
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
       e.target.classList.add('visible');
+    } else {
+      // remove visible so animation replays on next scroll
+      e.target.classList.remove('visible');
     }
   });
 }, { threshold: 0.12 });
@@ -995,6 +1106,22 @@ document.querySelectorAll('.reveal').forEach((el, i) => {
   el.style.transitionDelay = (i % 4) * 0.08 + 's';
   revealObserver.observe(el);
 });
+
+// hamburger menu for mobile
+// toggles the full screen nav overlay
+function toggleMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  hamburger.classList.toggle('open');
+  menu.classList.toggle('open');
+}
+
+function closeMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const menu = document.getElementById('mobileMenu');
+  hamburger.classList.remove('open');
+  menu.classList.remove('open');
+}
 
 // typing animation on the hero bio
 // types out the text character by character on page load
