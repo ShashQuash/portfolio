@@ -283,7 +283,7 @@
   .proj-link:hover { color: var(--purple-glow); }
   .proj-link svg { width: 13px; height: 13px; }
 
-  /* three column skill grid with animated progress bars */
+  /* three column skill grid - clean tags, no progress bars */
   .skills-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
   }
@@ -293,31 +293,45 @@
     transition: border-color 0.3s, transform 0.2s;
   }
   .skill-group:hover {
-    border-color: var(--border); transform: translateY(-2px);
+    border-color: rgba(124,58,237,0.4); transform: translateY(-2px);
   }
   .skill-group-icon {
     width: 40px; height: 40px; border-radius: 10px;
     background: rgba(124,58,237,0.15);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 16px; font-size: 18px;
+    margin-bottom: 16px;
   }
   .skill-group-title {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em;
     text-transform: uppercase; color: var(--purple); margin-bottom: 16px;
   }
-  .skill-pills { display: flex; flex-direction: column; gap: 10px; }
-  .skill-pill {
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: 13.5px; color: var(--text-dim);
+  .skill-tag-grid {
+    display: flex; flex-wrap: wrap; gap: 8px;
   }
-  .skill-pill-bar {
-    height: 3px; background: var(--border); border-radius: 2px;
-    overflow: hidden; flex: 1; margin-left: 12px; max-width: 80px;
+  .skill-tag {
+    font-family: var(--mono); font-size: 12px;
+    padding: 5px 12px; border-radius: 6px;
+    background: rgba(124,58,237,0.1);
+    border: 1px solid rgba(124,58,237,0.25);
+    color: var(--text-dim);
+    transition: border-color 0.2s, color 0.2s;
   }
-  .skill-pill-fill {
-    height: 100%; border-radius: 2px;
-    background: linear-gradient(90deg, var(--purple), var(--purple-glow));
-    width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1);
+  .skill-tag:hover {
+    border-color: var(--purple-light); color: var(--purple-glow);
+  }
+
+  /* typing animation for hero bio */
+  .typing-text {
+    overflow: hidden;
+    white-space: normal;
+    border-right: 2px solid var(--purple-light);
+    animation: blink-caret 0.8s step-end infinite;
+  }
+  .typing-text.done {
+    border-right: none;
+  }
+  @keyframes blink-caret {
+    50% { border-color: transparent; }
   }
 
   /* experience cards - year label on the left, content on the right */
@@ -569,21 +583,17 @@
       <div class="hero-tag">Based in Berlin, Germany</div>
       <h1 class="hero-name">Shrish<br><span>Arunesh</span></h1>
       <p class="hero-role">// CS Student · Backend Development · Cybersecurity</p>
-      <p class="hero-bio">
-        CS student at BSBI Berlin graduating October 2026. Two live-deployed backend security projects in Python and FastAPI. Background in technical support (100 tickets/day, Netspark VPN) and published computer vision research on IEEE Xplore. Seeking a Werkstudent role in backend or cybersecurity.
+      <p class="hero-bio typing-text" id="hero-bio">
+        CS student in Berlin building real backend and security systems from scratch. I learn by shipping — currently focused on authentication, cryptography and API security. Two live projects deployed, more in progress. Open to Werkstudent roles where I can contribute and keep growing fast.
       </p>
       <div class="hero-actions">
-        <a href="#projects" class="btn-primary" data-tip="See what I've built">
+        <a href="#projects" class="btn-primary" data-tip="See what I built">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
           View Projects
         </a>
-        <a href="https://github.com/ShashQuash" target="_blank" class="btn-ghost" data-tip="My GitHub profile">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          GitHub
-        </a>
-        <a href="https://www.linkedin.com/in/shrish-arunesh/" target="_blank" class="btn-ghost" data-tip="Connect on LinkedIn">
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-          LinkedIn
+        <a href="#contact" class="btn-ghost" data-tip="Get in touch">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Contact Me
         </a>
       </div>
     </div>
@@ -597,14 +607,12 @@
       </div>
       <div class="term-line"><span class="term-prompt">$ </span><span class="term-key">whoami</span></div>
       <div class="term-line"><span class="term-val">shrish_arunesh</span></div>
-      <div class="term-line" style="margin-top:8px"><span class="term-prompt">$ </span><span class="term-key">cat status.json</span></div>
+      <div class="term-line" style="margin-top:8px"><span class="term-prompt">$ </span><span class="term-key">cat focus.json</span></div>
       <div class="term-line term-comment">{</div>
       <div class="term-line term-comment">&nbsp;&nbsp;"city": <span class="term-val">"Berlin 🇩🇪"</span>,</div>
       <div class="term-line term-comment">&nbsp;&nbsp;"degree": <span class="term-val">"BSc CS 2026"</span>,</div>
-      <div class="term-line term-comment">&nbsp;&nbsp;"permit": <span class="term-val">"Student Visa ✅"</span>,</div>
-      <div class="term-line term-comment">&nbsp;&nbsp;"german": <span class="term-val">"A2 → B1"</span>,</div>
-      <div class="term-line term-comment">&nbsp;&nbsp;"seeking": <span class="term-val">"Werkstudent"</span>,</div>
-      <div class="term-line term-comment">&nbsp;&nbsp;"status": <span class="term-val">"available"</span></div>
+      <div class="term-line term-comment">&nbsp;&nbsp;"focus": <span class="term-val">"Backend + Security"</span>,</div>
+      <div class="term-line term-comment">&nbsp;&nbsp;"status": <span class="term-val">"available ✅"</span></div>
       <div class="term-line term-comment">}</div>
       <div class="term-line" style="margin-top:8px"><span class="term-prompt">$ </span><span class="term-cursor"></span></div>
     </div>
@@ -691,95 +699,63 @@
 
 <div class="glow-line"></div>
 
-<!-- skills section with language pills and animated bars -->
+<!-- skills section - clean tag based layout, no progress bars -->
 <section id="skills">
   <div class="section-wrap">
     <div class="section-label reveal">02 — Skills</div>
     <h2 class="section-title reveal">What I Work With</h2>
 
-    <div class="lang-row reveal">
-      <div class="lang-pill" data-tip="Native language"><span>🇮🇳</span> Hindi <span class="lang-level">Native</span></div>
-      <div class="lang-pill" data-tip="Professional level"><span>🇬🇧</span> English <span class="lang-level">C1</span></div>
-      <div class="lang-pill" data-tip="Actively improving"><span>🇩🇪</span> German <span class="lang-level">A2</span></div>
-    </div>
-
     <div class="skills-grid">
       <div class="skill-group reveal">
-        <div class="skill-group-icon">🐍</div>
+        <div class="skill-group-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
         <div class="skill-group-title">Languages</div>
-        <div class="skill-pills">
-          <div class="skill-pill" data-tip="Primary language — used in all projects">
-            Python
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="75"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Frontend scripts & API interaction">
-            JavaScript
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="55"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Structuring web pages">
-            HTML / CSS
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="60"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Studied in CS curriculum">
-            Java
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="40"></div></div>
-          </div>
+        <div class="skill-tag-grid">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">HTML / CSS</span>
+          <span class="skill-tag">Java</span>
         </div>
       </div>
 
       <div class="skill-group reveal">
-        <div class="skill-group-icon">🔒</div>
+        <div class="skill-group-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
         <div class="skill-group-title">Security & Backend</div>
-        <div class="skill-pills">
-          <div class="skill-pill" data-tip="Python web framework used in both projects">
-            FastAPI
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="65"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Stateless token-based authentication">
-            JWT Auth
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="70"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Secure password storage">
-            bcrypt Hashing
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="70"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Time-based one-time passwords">
-            TOTP / 2FA
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="65"></div></div>
-          </div>
+        <div class="skill-tag-grid">
+          <span class="skill-tag">FastAPI</span>
+          <span class="skill-tag">JWT</span>
+          <span class="skill-tag">bcrypt</span>
+          <span class="skill-tag">TOTP / 2FA</span>
+          <span class="skill-tag">REST APIs</span>
+          <span class="skill-tag">Rate Limiting</span>
         </div>
       </div>
 
       <div class="skill-group reveal">
-        <div class="skill-group-icon">🛠️</div>
-        <div class="skill-group-title">Tools & Other</div>
-        <div class="skill-pills">
-          <div class="skill-pill" data-tip="Version control for all projects">
-            Git / GitHub
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="70"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Handled VPN troubleshooting at Netspark">
-            VPN Protocols
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="55"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Used for image labelling in research project">
-            CVAT
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="50"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Used in technical support role">
-            Zoho CRM
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="45"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Windows, macOS, Android, iOS">
-            Device Troubleshooting
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="60"></div></div>
-          </div>
-          <div class="skill-pill" data-tip="Docs, Sheets, Drive + Word, Excel, Outlook">
-            Google & MS Office
-            <div class="skill-pill-bar"><div class="skill-pill-fill" data-width="65"></div></div>
-          </div>
+        <div class="skill-group-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg>
+        </div>
+        <div class="skill-group-title">Tools & Systems</div>
+        <div class="skill-tag-grid">
+          <span class="skill-tag">Git / GitHub</span>
+          <span class="skill-tag">VPN Protocols</span>
+          <span class="skill-tag">Zoho CRM</span>
+          <span class="skill-tag">CVAT</span>
+          <span class="skill-tag">Linux (beginner)</span>
+          <span class="skill-tag">Google Workspace</span>
+          <span class="skill-tag">MS Office</span>
         </div>
       </div>
+    </div>
+
+    <!-- languages spoken -->
+    <div class="lang-row reveal" style="margin-top: 32px;">
+      <div class="lang-pill"><span>🇮🇳</span> Hindi <span class="lang-level">Native</span></div>
+      <div class="lang-pill"><span>🇬🇧</span> English <span class="lang-level">C1</span></div>
+      <div class="lang-pill"><span>🇩🇪</span> German <span class="lang-level">A2 → B1</span></div>
     </div>
   </div>
 </section>
@@ -871,20 +847,28 @@
         </p>
         <div class="contact-links reveal">
           <a href="mailto:shrisharunesh@gmail.com" class="contact-link" data-tip="Send me an email">
-            <div class="contact-link-icon">✉️</div>
+            <div class="contact-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
             shrisharunesh@gmail.com
           </a>
           <a href="https://github.com/ShashQuash" target="_blank" class="contact-link" data-tip="See my projects and code">
-            <div class="contact-link-icon">⌨️</div>
+            <div class="contact-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#a855f7"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            </div>
             github.com/ShashQuash
           </a>
           <a href="https://www.linkedin.com/in/shrish-arunesh/" target="_blank" class="contact-link" data-tip="Connect professionally">
-            <div class="contact-link-icon">🔗</div>
+            <div class="contact-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="#a855f7"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+            </div>
             linkedin.com/in/shrish-arunesh
           </a>
           <div class="contact-link" style="cursor:default" data-tip="Located in Berlin, Germany">
-            <div class="contact-link-icon">📍</div>
-            Berlin, Germany · Student Residence Permit · Eligible to Work
+            <div class="contact-link-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            Berlin, Germany · Student Visa · Eligible to Work
           </div>
         </div>
       </div>
@@ -1012,19 +996,29 @@ document.querySelectorAll('.reveal').forEach((el, i) => {
   revealObserver.observe(el);
 });
 
-// animates the skill bars when the skills section comes into view
-// reads data-width from each bar and sets the CSS width
-const barObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.querySelectorAll('.skill-pill-fill').forEach(bar => {
-        bar.style.width = bar.dataset.width + '%';
-      });
-    }
-  });
-}, { threshold: 0.3 });
+// typing animation on the hero bio
+// types out the text character by character on page load
+// removes the cursor blink once done
+const heroBio = document.getElementById('hero-bio');
+if (heroBio) {
+  const fullText = heroBio.textContent.trim();
+  heroBio.textContent = '';
+  let i = 0;
+  const speed = 18; // ms per character
 
-document.querySelectorAll('.skills-grid').forEach(g => barObserver.observe(g));
+  function typeChar() {
+    if (i < fullText.length) {
+      heroBio.textContent += fullText.charAt(i);
+      i++;
+      setTimeout(typeChar, speed);
+    } else {
+      heroBio.classList.add('done'); // removes cursor blink
+    }
+  }
+
+  // small delay before starting so page loads first
+  setTimeout(typeChar, 600);
+}
 
 // contact form - connected to Formspree
 // submits via fetch so the page doesn't reload
