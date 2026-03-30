@@ -37,7 +37,6 @@
     cursor: none;
   }
 
-  /* my custom pixel cursor - hides the default one and shows a pixel art arrow */
   .cursor-pixel {
     position: fixed;
     pointer-events: none;
@@ -54,7 +53,6 @@
     filter: drop-shadow(0 0 10px #c084fc) drop-shadow(0 0 20px #a855f7);
   }
 
-  /* canvas is fixed behind everything - z-index 0 so content sits on top */
   #matrix-canvas {
     position: fixed; top: 0; left: 0;
     width: 100%; height: 100%;
@@ -253,7 +251,6 @@
   }
   @keyframes blink { 50% { opacity: 0; } }
 
-  /* reusable label and title styles, used across all sections */
   .section-wrap {
     max-width: 1000px; margin: 0 auto; padding: 100px 48px;
   }
@@ -322,7 +319,6 @@
   .proj-link:hover { color: var(--purple-glow); }
   .proj-link svg { width: 13px; height: 13px; }
 
-  /* three column skill grid - clean tags, no progress bars */
   .skills-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
   }
@@ -406,7 +402,6 @@
     color: var(--purple); font-size: 11px; top: 3px;
   }
 
-  /* two column grid for degree and certs */
   .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
   .edu-card {
     background: var(--surface); border: 1px solid var(--border);
@@ -515,7 +510,6 @@
   }
   .form-textarea { resize: vertical; min-height: 110px; }
 
-  /* simple footer - name, city, github link */
   footer {
     text-align: center; padding: 40px;
     font-family: var(--mono); font-size: 11px; color: var(--text-muted);
@@ -523,7 +517,6 @@
     position: relative; z-index: 1;
   }
 
-  /* thin purple gradient line between sections */
   .glow-line {
     width: 100%; height: 1px;
     background: linear-gradient(90deg, transparent, var(--purple), transparent);
@@ -617,7 +610,6 @@
   </svg>
 </div>
 
-<!-- top navigation bar -->
 <nav>
   <a href="#" class="nav-logo">&lt;<span>SA</span>/&gt;</a>
   <div class="nav-links">
@@ -635,7 +627,6 @@
   </button>
 </nav>
 
-<!-- full screen mobile menu -->
 <div class="nav-mobile" id="mobileMenu">
   <button onclick="closeMenu()" style="
     position: absolute; top: 20px; right: 24px;
@@ -654,7 +645,7 @@
   <a href="#contact" onclick="closeMenu()">Contact</a>
 </div>
 
-<!-- hero section - name, bio, buttons and terminal card -->
+
 <section id="about"></section>
 <section id="hero">
   <div class="hero-inner">
@@ -677,7 +668,6 @@
       </div>
     </div>
 
-    <!-- little terminal widget on the right showing my status -->
     <div class="hero-terminal">
       <div class="term-bar">
         <div class="term-dot"></div>
@@ -700,7 +690,6 @@
 
 <div class="glow-line"></div>
 
-<!-- projects section - cards linking to github and live demos -->
 <section id="projects">
   <div class="section-wrap">
     <div class="section-label reveal">01 — Projects</div>
@@ -778,7 +767,7 @@
 
 <div class="glow-line"></div>
 
-<!-- skills section - clean tag based layout, no progress bars -->
+
 <section id="skills">
   <div class="section-wrap">
     <div class="section-label reveal">02 — Skills</div>
@@ -830,7 +819,6 @@
       </div>
     </div>
 
-    <!-- languages spoken -->
     <div class="lang-row reveal" style="margin-top: 32px;">
       <div class="lang-pill">
         <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:3px;flex-shrink:0;">
@@ -869,7 +857,7 @@
 
 <div class="glow-line"></div>
 
-<!-- work experience timeline -->
+
 <section id="experience">
   <div class="section-wrap">
     <div class="section-label reveal">03 — Experience</div>
@@ -908,7 +896,6 @@
 
 <div class="glow-line"></div>
 
-<!-- education and certifications -->
 <section id="education">
   <div class="section-wrap">
     <div class="section-label reveal">04 — Education</div>
@@ -942,7 +929,6 @@
 
 <div class="glow-line"></div>
 
-<!-- contact section with links and a message form -->
 <section id="contact">
   <div class="section-wrap">
     <div class="section-label reveal">05 — Contact</div>
@@ -1007,9 +993,6 @@
 </footer>
 
 <script>
-// matrix rain animation
-// draws falling characters on the canvas behind everything
-// purple and white color scheme to match the site
 const canvas = document.getElementById('matrix-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -1057,7 +1040,7 @@ function drawMatrix() {
 
 setInterval(drawMatrix, 40);
 
-// custom cursor logic
+
 // tracks mouse position and moves the pixel arrow
 // adds clicking class on mousedown for the spin effect
 // disabled on touch devices since there's no mouse
@@ -1087,7 +1070,6 @@ if (!isTouchDevice) {
   });
 }
 
-// scroll reveal
 // watches elements with .reveal class
 // adds .visible when scrolled into view, removes when out of view
 // this means animation repeats every time you scroll past an element
@@ -1107,8 +1089,6 @@ document.querySelectorAll('.reveal').forEach((el, i) => {
   revealObserver.observe(el);
 });
 
-// hamburger menu for mobile
-// toggles the full screen nav overlay
 function toggleMenu() {
   const hamburger = document.getElementById('hamburger');
   const menu = document.getElementById('mobileMenu');
@@ -1123,7 +1103,7 @@ function closeMenu() {
   menu.classList.remove('open');
 }
 
-// typing animation on the hero bio
+
 // types out the text character by character on page load
 // removes the cursor blink once done
 const heroBio = document.getElementById('hero-bio');
@@ -1147,9 +1127,6 @@ if (heroBio) {
   setTimeout(typeChar, 600);
 }
 
-// contact form - connected to Formspree
-// submits via fetch so the page doesn't reload
-// shows success or error message depending on response
 async function handleFormSubmit(btn) {
   const name = document.getElementById('form-name').value.trim();
   const email = document.getElementById('form-email').value.trim();
