@@ -22,11 +22,12 @@ experience, education and contact.
 
 ## Projects featured
 
-| Project | Live Demo | GitHub | Stack |
-|---|---|---|---|
-| Secure Auth API | [Demo](https://shashquash.github.io/secure-auth-api/frontend) | [Repo](https://github.com/ShashQuash/secure-auth-api) | FastAPI · JWT · bcrypt |
-| 2FA Auth System | [Demo](https://shashquash.github.io/2fa-auth-system/frontend) | [Repo](https://github.com/ShashQuash/2fa-auth-system) | FastAPI · TOTP · QR codes |
-| Animal Detection Model | [IEEE Paper](https://ieeexplore.ieee.org/document/11249593) | — | CVAT · Supervised Learning |
+| Project | Live Demo | GitHub | Stack | Status |
+|---|---|---|---|---|
+| Secure Auth API | [Demo](https://shashquash.github.io/secure-auth-api/frontend) | [Repo](https://github.com/ShashQuash/secure-auth-api) | FastAPI · JWT · bcrypt | ✅ Complete |
+| 2FA Auth System | [Demo](https://shashquash.github.io/2fa-auth-system/frontend) | [Repo](https://github.com/ShashQuash/2fa-auth-system) | FastAPI · TOTP · QR codes | ✅ Complete |
+| Web Vulnerability Scanner | Coming soon | [Repo](https://github.com/ShashQuash/vulnerability-scanner) | FastAPI · socket · requests | 🔨 In Progress |
+| Animal Detection Model | [IEEE Paper](https://ieeexplore.ieee.org/document/11249593) | — | CVAT · Supervised Learning | ✅ Complete |
 
 ---
 
@@ -49,6 +50,7 @@ are disabled where hover doesn't work.
 
 ## Planned updates
 
+- Complete Web Vulnerability Scanner (Layers 6 & 7 — SQLi, XSS, directory traversal)
 - Add more projects as they get built and deployed
 - Add a blog or notes section for cybersecurity writeups
 - Connect contact form to a self-built FastAPI email backend
@@ -64,5 +66,5 @@ support and published computer vision research. Open to Werkstudent
 roles in backend development or cybersecurity.
 
 📧 shrisharunesh@gmail.com
-🔗 [linkedin.com/in/shrish-arunesh-41aaa133a](https://linkedin.com/in/shrish-arunesh-41aaa133a)
+🔗 [linkedin.com/in/shrish-arunesh](https://www.linkedin.com/in/shrish-arunesh/)
 ⌨️ [github.com/ShashQuash](https://github.com/ShashQuash)
