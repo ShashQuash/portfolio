@@ -16,11 +16,18 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { background: var(--bg); color: var(--text); font-family: var(--body); overflow-x: hidden; cursor: none; }
+  *, *::before, *::after { cursor: none !important; }
   .cursor-pixel { position: fixed; pointer-events: none; z-index: 9999; transform: translate(-2px, -2px); }
-  .cursor-pixel svg { filter: drop-shadow(0 0 5px #a855f7) drop-shadow(0 0 10px #7c3aed); transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.15s ease; }
-  .cursor-pixel.clicking svg { transform: rotate(180deg) scale(0.8); filter: drop-shadow(0 0 10px #c084fc) drop-shadow(0 0 20px #a855f7); }
+  .cursor-pixel svg { filter: drop-shadow(0 0 5px #a855f7) drop-shadow(0 0 10px #7c3aed); transition: filter 0.15s ease; }
+  .cursor-pixel.is-pointer svg { filter: drop-shadow(0 0 6px #c084fc) drop-shadow(0 0 12px #a855f7); }
+  .cursor-ripple { position: fixed; pointer-events: none; z-index: 9998; border-radius: 50%; border: 1.5px solid rgba(168,85,247,0.8); transform: translate(-50%, -50%) scale(0); animation: ripple-expand 0.6s ease-out forwards; }
+  .cursor-ripple.ring2 { animation-delay: 0.1s; border-color: rgba(192,132,252,0.5); }
+  .cursor-ripple.ring3 { animation-delay: 0.2s; border-color: rgba(124,58,237,0.3); }
+  @keyframes ripple-expand {
+    0%   { width: 6px; height: 6px; opacity: 1; transform: translate(-50%, -50%) scale(0); }
+    100% { width: 60px; height: 60px; opacity: 0; transform: translate(-50%, -50%) scale(1); }
+  }
   #matrix-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; opacity: 0.35; pointer-events: none; }
-  /* fixed navbar at top - stays visible while scrolling */
   nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 18px 48px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(to bottom, rgba(10,6,16,0.95), transparent); backdrop-filter: blur(2px); }
   .nav-logo { font-family: var(--mono); color: var(--purple-glow); font-size: 15px; letter-spacing: 0.1em; text-decoration: none; }
   .nav-logo span { color: var(--accent); }
@@ -29,25 +36,20 @@
   .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); width: 0; height: 1px; background: var(--purple-light); transition: width 0.3s; }
   .nav-links a:hover { color: var(--purple-glow); }
   .nav-links a:hover::after { width: 100%; }
-  /* hamburger button - only shows on mobile */
   .nav-hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; z-index: 200; background: none; border: none; }
   .nav-hamburger span { display: block; width: 24px; height: 2px; background: var(--purple-glow); border-radius: 2px; transition: all 0.3s ease; }
   .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .nav-hamburger.open span:nth-child(2) { opacity: 0; }
   .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-  /* mobile dropdown menu */
   .nav-mobile { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(10,6,16,0.97); backdrop-filter: blur(16px); z-index: 150; flex-direction: column; align-items: center; justify-content: center; gap: 32px; }
   .nav-mobile.open { display: flex; }
   .nav-mobile a { font-family: var(--mono); font-size: 20px; color: var(--text-dim); text-decoration: none; letter-spacing: 0.2em; text-transform: uppercase; transition: color 0.2s; }
   .nav-mobile a:hover { color: var(--purple-glow); }
-  /* tooltips drop downward on hover - z-index 9999 so they never hide behind stuff */
   [data-tip] { position: relative; }
   [data-tip]::before { content: attr(data-tip); position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%) translateY(-4px); background: var(--surface2); border: 1px solid var(--border); color: var(--purple-glow); font-family: var(--mono); font-size: 11px; padding: 6px 12px; border-radius: 6px; white-space: nowrap; pointer-events: none; opacity: 0; z-index: 9999; transition: opacity 0.2s, transform 0.2s; box-shadow: 0 0 16px rgba(124,58,237,0.3); }
   [data-tip]::after { content: ''; position: absolute; top: calc(100% + 4px); left: 50%; transform: translateX(-50%) translateY(-4px); border: 5px solid transparent; border-bottom-color: var(--border); pointer-events: none; opacity: 0; z-index: 9999; transition: opacity 0.2s, transform 0.2s; }
   [data-tip]:hover::before, [data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
-  /* sections need z-index 1 to stay above the canvas background */
   section { position: relative; z-index: 1; }
-  /* hero is the first section - full screen height, grid layout for name + terminal */
   #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 48px 80px; }
   .hero-inner { max-width: 900px; width: 100%; display: grid; grid-template-columns: 1fr auto; gap: 60px; align-items: center; }
   .hero-tag { font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
@@ -55,13 +57,21 @@
   .hero-name { font-family: var(--display); font-size: clamp(42px, 7vw, 80px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; color: var(--text); margin-bottom: 8px; }
   .hero-name span { background: linear-gradient(135deg, var(--purple-light), var(--purple-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero-role { font-family: var(--mono); font-size: 15px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 28px; }
-  .hero-bio { font-size: 16px; line-height: 1.75; color: var(--text-dim); max-width: 540px; margin-bottom: 40px; }
+  .hero-bio {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    letter-spacing: 0.012em;
+    color: var(--text-dim);
+    max-width: 540px;
+    margin-bottom: 40px;
+  }
   .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
   .btn-primary { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 8px; background: var(--purple); color: #fff; font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, box-shadow 0.2s, transform 0.15s; box-shadow: 0 0 24px rgba(124,58,237,0.35); }
   .btn-primary:hover { background: var(--purple-light); box-shadow: 0 0 40px rgba(168,85,247,0.5); transform: translateY(-2px); }
   .btn-ghost { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 8px; background: transparent; color: var(--purple-glow); font-family: var(--mono); font-size: 13px; letter-spacing: 0.1em; text-decoration: none; border: 1px solid var(--border); cursor: pointer; transition: border-color 0.2s, color 0.2s, box-shadow 0.2s, transform 0.15s; }
   .btn-ghost:hover { border-color: var(--purple-light); color: var(--text); box-shadow: 0 0 24px rgba(124,58,237,0.2); transform: translateY(-2px); }
-  /* Hero terminal widget */
   .hero-terminal { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; width: 280px; flex-shrink: 0; box-shadow: 0 0 60px rgba(124,58,237,0.15); font-family: var(--mono); font-size: 12.5px; }
   .term-bar { display: flex; gap: 8px; margin-bottom: 18px; }
   .term-dot { width: 11px; height: 11px; border-radius: 50%; }
@@ -79,7 +89,6 @@
   .section-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em; color: var(--purple); text-transform: uppercase; display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
   .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--border); }
   .section-title { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 56px; }
-  /* cards with hover effect - purple top border appears on hover */
   .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .project-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s; position: relative; overflow: hidden; cursor: none; }
   .project-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--purple), transparent); opacity: 0; transition: opacity 0.3s; }
@@ -102,11 +111,9 @@
   .skill-tag-grid { display: flex; flex-wrap: wrap; gap: 8px; }
   .skill-tag { font-family: var(--mono); font-size: 12px; padding: 5px 12px; border-radius: 6px; background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.25); color: var(--text-dim); transition: border-color 0.2s, color 0.2s; }
   .skill-tag:hover { border-color: var(--purple-light); color: var(--purple-glow); }
-  /* typing animation for hero bio */
   .typing-text { overflow: hidden; white-space: normal; border-right: 2px solid var(--purple-light); animation: blink-caret 0.8s step-end infinite; }
   .typing-text.done { border-right: none; }
   @keyframes blink-caret { 50% { border-color: transparent; } }
-  /* experience cards - year label on the left, content on the right */
   .experience-list { display: flex; flex-direction: column; gap: 24px; }
   .exp-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 32px; display: grid; grid-template-columns: 120px 1fr; gap: 24px; transition: border-color 0.3s; }
   .exp-card:hover { border-color: rgba(124,58,237,0.4); }
@@ -116,7 +123,6 @@
   .exp-bullets { list-style: none; }
   .exp-bullets li { font-size: 14px; color: var(--text-dim); line-height: 1.7; padding-left: 18px; position: relative; margin-bottom: 4px; }
   .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--purple); font-size: 11px; top: 3px; }
-  /* ========== EDUCATION SECTION ========== */
   .edu-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
   .edu-degree-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 32px; height: 100%; position: relative; overflow: hidden; transition: border-color 0.3s, transform 0.2s; }
   .edu-degree-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--purple), transparent); }
@@ -147,12 +153,10 @@
   .cert-status { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; }
   .cert-status.green { color: var(--accent2); }
   .cert-status.amber { color: #f59e0b; }
-  /* language pills row that sits above the skills grid */
   .lang-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: -20px; margin-bottom: 40px; }
   .lang-pill { display: flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 30px; background: var(--surface); border: 1px solid var(--border); font-size: 13.5px; color: var(--text-dim); transition: border-color 0.2s; }
   .lang-pill:hover { border-color: var(--purple); }
   .lang-level { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--purple-light); padding: 2px 8px; background: rgba(124,58,237,0.12); border-radius: 10px; }
-  /* contact section uses bg2 so it looks visually separate */
   #contact { background: var(--bg2); }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
   .contact-text { font-size: 15px; line-height: 1.8; color: var(--text-dim); margin-bottom: 32px; }
@@ -168,7 +172,6 @@
   .form-textarea { resize: vertical; min-height: 110px; }
   footer { text-align: center; padding: 40px; font-family: var(--mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; border-top: 1px solid var(--border); position: relative; z-index: 1; }
   .glow-line { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--purple), transparent); opacity: 0.4; position: relative; z-index: 1; }
-  /* reveal class - elements start hidden and fade in when scrolled into view */
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: none; }
   @media (max-width: 768px) {
@@ -179,19 +182,15 @@
     .hero-terminal { display: block; width: 100%; font-size: 11.5px; padding: 18px; margin-top: 8px; }
     .section-wrap { padding: 60px 24px; }
     .projects-grid, .skills-grid, .contact-grid, .edu-layout { grid-template-columns: 1fr; }
-    /* hide custom cursor on touch devices - no mouse needed */
     .cursor-pixel { display: none; }
-    body { cursor: auto; }
-    .btn-primary, .btn-ghost, .project-card, .form-input, .form-textarea, .contact-link { cursor: pointer; }
-    /* tooltips don't work on touch so hide them */
+    body, *, *::before, *::after { cursor: auto !important; }
+    .btn-primary, .btn-ghost, .project-card, .form-input, .form-textarea, .contact-link { cursor: pointer !important; }
     [data-tip]::before, [data-tip]::after { display: none; }
     #hero { padding: 100px 24px 60px; }
     .hero-actions { flex-direction: column; }
     .btn-primary, .btn-ghost { justify-content: center; }
-    /* project tags wrap better on small screens */
     .project-tags { gap: 6px; }
     .tag { font-size: 10px; padding: 3px 8px; }
-    /* experience card stacks vertically on mobile */
     .exp-card { grid-template-columns: 1fr; gap: 4px; }
     .exp-year { font-size: 11px; color: var(--purple); padding-top: 0; }
   }
@@ -200,7 +199,7 @@
 <body>
 <canvas id="matrix-canvas"></canvas>
 <div class="cursor-pixel" id="cursor-pixel">
-  <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+  <svg id="cursor-arrow" width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <linearGradient id="cursorGrad" x1="0%" y1="0%" x2="100%" y2="100%">
         <stop offset="0%" style="stop-color:#ffffff"/>
@@ -208,8 +207,6 @@
         <stop offset="100%" style="stop-color:#06b6d4"/>
       </linearGradient>
     </defs>
-    <!-- pixel art arrow shape made of small squares -->
-    <!-- left edge of the arrow -->
     <rect x="0" y="0" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="0" y="2" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="0" y="4" width="2" height="2" fill="url(#cursorGrad)"/>
@@ -217,21 +214,71 @@
     <rect x="0" y="8" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="0" y="10" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="0" y="12" width="2" height="2" fill="url(#cursorGrad)"/>
-    <!-- second column, one pixel shorter -->
     <rect x="2" y="2" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="2" y="4" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="2" y="6" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="2" y="8" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="2" y="10" width="2" height="2" fill="url(#cursorGrad)"/>
-    <!-- getting shorter as we go right -->
     <rect x="4" y="4" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="4" y="6" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="4" y="8" width="2" height="2" fill="url(#cursorGrad)"/>
-    <!-- almost at the tip -->
     <rect x="6" y="6" width="2" height="2" fill="url(#cursorGrad)"/>
     <rect x="6" y="8" width="2" height="2" fill="url(#cursorGrad)"/>
-    <!-- tip of the arrow -->
     <rect x="8" y="8" width="2" height="2" fill="url(#cursorGrad)"/>
+  </svg>
+  <svg id="cursor-hand" width="22" height="24" viewBox="0 0 22 24" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+    <defs>
+      <linearGradient id="handGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#ffffff"/>
+        <stop offset="40%" style="stop-color:#c084fc"/>
+        <stop offset="100%" style="stop-color:#06b6d4"/>
+      </linearGradient>
+    </defs>
+    <rect x="6" y="0" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="2" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="2" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="2" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="4" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="4" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="4" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="2" y="6" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="6" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="6" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="6" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="10" y="6" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="0" y="8" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="2" y="8" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="8" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="8" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="8" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="10" y="8" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="12" y="8" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="0" y="10" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="2" y="10" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="10" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="10" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="10" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="10" y="10" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="12" y="10" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="0" y="12" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="2" y="12" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="12" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="12" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="12" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="10" y="12" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="12" y="12" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="0" y="14" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="2" y="14" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="14" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="14" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="14" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="10" y="14" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="2" y="16" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="16" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="16" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="8" y="16" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="4" y="18" width="2" height="2" fill="url(#handGrad)"/>
+    <rect x="6" y="18" width="2" height="2" fill="url(#handGrad)"/>
   </svg>
 </div>
 
@@ -269,7 +316,7 @@
       <div class="hero-tag">Based in Berlin, Germany</div>
       <h1 class="hero-name">Shrish<br><span>Arunesh</span></h1>
       <p class="hero-role">// CS Student · Backend Development · Application Security</p>
-      <p class="hero-bio typing-text" id="hero-bio">CS student in Berlin building backend systems with a security-first approach. Focused on authentication, API security, and vulnerability detection — areas directly relevant to Germany's growing demand for AppSec engineers under NIS2. Targeting Werkstudent roles in Berlin's tech and fintech sector.</p>
+      <p class="hero-bio typing-text" id="hero-bio">CS student in Berlin specialising in backend systems, API security, and vulnerability detection. Building practical experience in authentication and AppSec — aligned with NIS2 compliance requirements shaping the German tech landscape. Currently seeking Werkstudent roles in Berlin's fintech and tech sector.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn-primary" data-tip="See what I built">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
@@ -342,12 +389,29 @@
           </a>
         </div>
       </div>
-      <div class="project-card reveal" data-tip="In progress — AppSec tooling">
+      <div class="project-card reveal" data-tip="Actively in development">
         <div class="project-num">Project 03 — In Progress</div>
         <h3 class="project-title">Web Vulnerability Scanner</h3>
-        <p class="project-desc">Automated scanner detecting missing HTTP security headers, SSL/TLS issues, open ports, SQLi, XSS, and directory traversal. Outputs severity-rated reports aligned with OWASP Top 10.</p>
+        <p class="project-desc">Modular AppSec tool that scans a target URL and produces severity-rated findings across OWASP Top 10 categories. Backend complete for headers and SSL/TLS scanning. Open ports, SQLi, XSS, and directory traversal modules in progress.</p>
+        <div style="margin-bottom:16px;">
+          <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;">Completed so far</div>
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
+              <span style="color:var(--accent2);font-size:11px;">✓</span> FastAPI backend skeleton + CORS
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
+              <span style="color:var(--accent2);font-size:11px;">✓</span> HTTP security headers scanner (CSP, HSTS, X-Frame-Options, and more)
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
+              <span style="color:var(--accent2);font-size:11px;">✓</span> SSL/TLS certificate scanner (expiry, self-signed, weak protocol detection)
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
+              <span style="color:var(--text-muted);font-size:11px;">○</span> Port scanner, SQLi, XSS, directory traversal — upcoming
+            </div>
+          </div>
+        </div>
         <div class="project-tags">
-          <span class="tag">FastAPI</span><span class="tag">Python</span><span class="tag">OWASP Top 10</span><span class="tag">SSL/TLS</span><span class="tag">Port Scanning</span>
+          <span class="tag">FastAPI</span><span class="tag">Python</span><span class="tag">OWASP Top 10</span><span class="tag">SSL/TLS</span><span class="tag">HTTP Headers</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/ShashQuash/vulnerability-scanner" target="_blank" class="proj-link">
@@ -397,7 +461,6 @@
     <div class="lang-row reveal" style="margin-top: 32px;">
       <div class="lang-pill">
         <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:3px;flex-shrink:0;">
-          <!-- India flag -->
           <rect width="24" height="16" fill="#fff"/><rect width="24" height="5.33" fill="#FF9933"/><rect y="10.67" width="24" height="5.33" fill="#138808"/>
           <circle cx="12" cy="8" r="2.5" fill="none" stroke="#000080" stroke-width="0.5"/><circle cx="12" cy="8" r="0.5" fill="#000080"/>
         </svg>
@@ -405,7 +468,6 @@
       </div>
       <div class="lang-pill">
         <svg width="24" height="16" viewBox="0 0 60 40" style="border-radius:3px;flex-shrink:0;">
-          <!-- UK flag -->
           <rect width="60" height="40" fill="#012169"/>
           <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
           <path d="M0,0 L60,40 M60,0 L0,40" stroke="#C8102E" stroke-width="5"/>
@@ -416,7 +478,6 @@
       </div>
       <div class="lang-pill">
         <svg width="24" height="16" viewBox="0 0 24 16" style="border-radius:3px;flex-shrink:0;">
-          <!-- Germany flag -->
           <rect width="24" height="16" fill="#FFCE00"/><rect width="24" height="5.33" fill="#000"/><rect y="5.33" width="24" height="5.33" fill="#DD0000"/>
         </svg>
         German <span class="lang-level">A2 → B1</span>
@@ -549,7 +610,7 @@
     <h2 class="section-title reveal">Get In Touch</h2>
     <div class="contact-grid">
       <div>
-        <p class="contact-text reveal">CS student in Berlin on a student residence permit, eligible to work up to 20 hours per week. Interested in Werkstudent roles in backend development or application security. Open to internships and project collaboration.</p>
+        <p class="contact-text reveal">CS student in Berlin on a student residence permit, eligible to work up to 20 hours per week. Available for Werkstudent positions in backend development or application security. Open to internships and technical project collaboration.</p>
         <div class="contact-links reveal">
           <a href="mailto:shrisharunesh@gmail.com" class="contact-link" data-tip="Send me an email">
             <div class="contact-link-icon">
@@ -598,7 +659,7 @@
 </section>
 
 <footer>
-  <p>Built by Shrish Arunesh &nbsp;·&nbsp; <span style="color:var(--purple)">Berlin, 2025</span> &nbsp;·&nbsp; <a href="https://github.com/ShashQuash" style="color:var(--text-muted);text-decoration:none">ShashQuash</a></p>
+  <p>Built by Shrish Arunesh &nbsp;·&nbsp; <span style="color:var(--purple)">Berlin, 2026</span> &nbsp;·&nbsp; <a href="https://github.com/ShashQuash" style="color:var(--text-muted);text-decoration:none">ShashQuash</a></p>
 </footer>
 
 <script>
@@ -625,7 +686,6 @@ function drawMatrix() {
     const char = chars[Math.floor(Math.random() * chars.length)];
     const x = i * fontSize;
     const y = drops[i] * fontSize;
-    // gradient: bright head, purple body
     const brightness = Math.random();
     if (brightness > 0.95) { ctx.fillStyle = '#e0c4ff'; }
     else if (brightness > 0.8) { ctx.fillStyle = '#a855f7'; }
@@ -637,33 +697,57 @@ function drawMatrix() {
 }
 setInterval(drawMatrix, 40);
 
-// tracks mouse position and moves the pixel arrow
-// adds clicking class on mousedown for the spin effect
-// disabled on touch devices since there's no mouse
 const pixelCursor = document.getElementById('cursor-pixel');
+const cursorArrow = document.getElementById('cursor-arrow');
+const cursorHand = document.getElementById('cursor-hand');
 const isTouchDevice = window.matchMedia('(max-width: 768px)').matches || 'ontouchstart' in window;
 
+const CLICKABLE = 'a, button, [onclick], .project-card, .skill-tag, .edu-module-tag, .cert-item, .lang-pill';
+
+function spawnRipple(x, y) {
+  ['', 'ring2', 'ring3'].forEach(cls => {
+    const r = document.createElement('div');
+    r.className = 'cursor-ripple' + (cls ? ' ' + cls : '');
+    r.style.left = (x + 1) + 'px';
+    r.style.top = (y + 1) + 'px';
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 800);
+  });
+}
+
 if (!isTouchDevice) {
+  let mouseX = 0, mouseY = 0;
+
   document.addEventListener('mousemove', e => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     pixelCursor.style.left = e.clientX + 'px';
     pixelCursor.style.top = e.clientY + 'px';
+
+    const target = document.elementFromPoint(e.clientX, e.clientY);
+    if (target && target.closest(CLICKABLE)) {
+      cursorArrow.style.display = 'none';
+      cursorHand.style.display = 'block';
+      pixelCursor.classList.add('is-pointer');
+    } else {
+      cursorArrow.style.display = 'block';
+      cursorHand.style.display = 'none';
+      pixelCursor.classList.remove('is-pointer');
+    }
   });
-  document.addEventListener('mousedown', () => { pixelCursor.classList.add('clicking'); });
-  document.addEventListener('mouseup', () => { pixelCursor.classList.remove('clicking'); });
+
+  document.addEventListener('mousedown', () => {
+    spawnRipple(mouseX, mouseY);
+  });
+
   document.addEventListener('mouseleave', () => { pixelCursor.style.opacity = '0'; });
   document.addEventListener('mouseenter', () => { pixelCursor.style.opacity = '1'; });
 }
 
-// watches elements with .reveal class
-// adds .visible when scrolled into view, removes when out of view
-// this means animation repeats every time you scroll past an element
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) { e.target.classList.add('visible'); }
-    else {
-      // remove visible so animation replays on next scroll
-      e.target.classList.remove('visible');
-    }
+    else { e.target.classList.remove('visible'); }
   });
 }, { threshold: 0.12 });
 
@@ -682,24 +766,21 @@ function closeMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 
-// types out the text character by character on page load
-// removes the cursor blink once done
 const heroBio = document.getElementById('hero-bio');
 if (heroBio) {
   const fullText = heroBio.textContent.trim();
   heroBio.textContent = '';
   let i = 0;
-  const speed = 18; // ms per character
+  const speed = 18;
   function typeChar() {
     if (i < fullText.length) {
       heroBio.textContent += fullText.charAt(i);
       i++;
       setTimeout(typeChar, speed);
     } else {
-      heroBio.classList.add('done'); // removes cursor blink
+      heroBio.classList.add('done');
     }
   }
-  // small delay before starting so page loads first
   setTimeout(typeChar, 600);
 }
 
@@ -709,7 +790,6 @@ async function handleFormSubmit(btn) {
   const message = document.getElementById('form-message').value.trim();
   const msgBox = document.getElementById('form-msg');
 
-  // basic validation
   if (!name || !email || !message) {
     msgBox.style.display = 'block';
     msgBox.style.color = '#ef9a9a';
@@ -727,7 +807,6 @@ async function handleFormSubmit(btn) {
       body: JSON.stringify({ name, email, message })
     });
     if (response.ok) {
-      // clear the fields
       document.getElementById('form-name').value = '';
       document.getElementById('form-email').value = '';
       document.getElementById('form-message').value = '';
