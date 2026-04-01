@@ -27,7 +27,7 @@ experience, education and contact.
 | Secure Auth API | [Demo](https://shashquash.github.io/secure-auth-api/frontend) | [Repo](https://github.com/ShashQuash/secure-auth-api) | FastAPI · JWT · bcrypt | ✅ Complete |
 | 2FA Auth System | [Demo](https://shashquash.github.io/2fa-auth-system/frontend) | [Repo](https://github.com/ShashQuash/2fa-auth-system) | FastAPI · TOTP · QR codes | ✅ Complete |
 | Web Vulnerability Scanner | Coming soon | [Repo](https://github.com/ShashQuash/vulnerability-scanner) | FastAPI · socket · requests | 🔨 In Progress |
-| Animal Detection Model | [IEEE Paper](https://ieeexplore.ieee.org/document/11249593) | — | CVAT · Supervised Learning | ✅ Complete |
+| Animal Pose Estimation | [IEEE Paper](https://ieeexplore.ieee.org/document/11249593) | [Repo](https://github.com/ShashQuash/real-time-animal-pose-estimation) | YOLO · CVAT · Python | ✅ Complete |
 
 ---
 
