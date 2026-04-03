@@ -6,55 +6,28 @@ Personal portfolio website built with HTML, CSS and JavaScript.
 
 ---
 
-## What's inside
-
-Single page portfolio with sections for projects, skills, work
-experience, education and contact.
-
-- Matrix rain background animation
-- Custom pixel cursor with click animation (desktop only)
-- Scroll reveal animations on all sections
-- Animated skill progress bars
-- Responsive layout for mobile and desktop
-- Working contact form via Formspree
-
----
-
-## Projects featured
+## Projects
 
 | Project | Live Demo | GitHub | Stack | Status |
 |---|---|---|---|---|
 | Secure Auth API | [Demo](https://shashquash.github.io/secure-auth-api/frontend) | [Repo](https://github.com/ShashQuash/secure-auth-api) | FastAPI · JWT · bcrypt | ✅ Complete |
 | 2FA Auth System | [Demo](https://shashquash.github.io/2fa-auth-system/frontend) | [Repo](https://github.com/ShashQuash/2fa-auth-system) | FastAPI · TOTP · QR codes | ✅ Complete |
-| Web Vulnerability Scanner | Coming soon | [Repo](https://github.com/ShashQuash/vulnerability-scanner) | FastAPI · socket · requests | 🔨 In Progress |
+| Web Vulnerability Scanner | Coming soon | [Repo](https://github.com/ShashQuash/vulnerability-scanner) | FastAPI · SQLi · XSS · socket · requests | 🔨 In Progress (Layer 7 remaining) |
 | Animal Pose Estimation | [IEEE Paper](https://ieeexplore.ieee.org/document/11249593) | [Repo](https://github.com/ShashQuash/real-time-animal-pose-estimation) | YOLO · CVAT · Python | ✅ Complete |
 
 ---
 
-## Tech used
+## Tech
 
 HTML · CSS · Vanilla JavaScript · Formspree
-
-No frameworks, no libraries — built from scratch to keep it lightweight
-and easy to understand.
-
----
-
-## Mobile support
-
-The site is responsive — grids collapse to single column on small
-screens, the custom cursor is hidden on touch devices, and tooltips
-are disabled where hover doesn't work.
 
 ---
 
 ## Planned updates
 
-- Complete Web Vulnerability Scanner (Layers 6 & 7 — SQLi, XSS, directory traversal)
-- Add more projects as they get built and deployed
-- Add a blog or notes section for cybersecurity writeups
+- Complete Web Vulnerability Scanner (Layer 7 — Directory Traversal)
+- Deploy vulnerability scanner live on Render
 - Connect contact form to a self-built FastAPI email backend
-- Improve German language section as proficiency improves
 
 ---
 
