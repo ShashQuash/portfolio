@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shrish Arunesh — Backend & Security Developer</title>
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #0a0610; --bg2: #0f0a1a; --surface: #120d20; --surface2: #1a1030;
@@ -117,8 +117,8 @@
   .hero-name span { background: linear-gradient(135deg, var(--purple-light), var(--purple-glow)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero-role { font-family: var(--mono); font-size: 15px; color: var(--text-dim); letter-spacing: 0.08em; margin-bottom: 28px; }
   .hero-bio {
-    font-family: 'DM Sans', sans-serif; font-size: 16px; font-weight: 300;
-    line-height: 1.8; letter-spacing: 0.012em; color: var(--text-dim);
+    font-family: 'DM Serif Display', serif; font-size: 17px; font-weight: 400;
+    line-height: 1.85; letter-spacing: 0.01em; color: var(--text-dim);
     max-width: 540px; margin-bottom: 40px;
   }
   .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
@@ -352,7 +352,7 @@
     .hero-inner { grid-template-columns: 1fr; gap: 32px; }
     .hero-name { font-size: clamp(36px, 10vw, 52px); }
     .hero-role { font-size: 13px; }
-    .hero-bio { font-size: 15px; max-width: 100%; }
+    .hero-bio { font-size: 16px; max-width: 100%; }
     .hero-terminal { width: 100%; font-size: 11.5px; padding: 18px; }
     .hero-actions { flex-direction: column; width: 100%; }
     .btn-primary, .btn-ghost { justify-content: center; width: 100%; padding: 14px 20px; }
@@ -536,7 +536,7 @@
       <div class="hero-tag">Based in Berlin, Germany</div>
       <h1 class="hero-name">Shrish<br><span>Arunesh</span></h1>
       <p class="hero-role">// CS Student · Backend Development · Application Security</p>
-      <p class="hero-bio typing-text" id="hero-bio">CS student in Berlin specialising in backend systems, API security, and vulnerability detection. Building practical experience in authentication and AppSec — aligned with NIS2 compliance requirements shaping the German tech landscape. Currently seeking Werkstudent roles in Berlin's fintech and tech sector.</p>
+      <p class="hero-bio typing-text" id="hero-bio">CS student in Berlin specialising in backend systems, API security, and vulnerability detection. Building practical experience in authentication and AppSec, aligned with NIS2 compliance requirements shaping the German tech landscape. Currently seeking Werkstudent roles in Berlin's fintech and tech sector.</p>
       <div class="hero-actions">
         <a href="#projects" class="btn-primary" data-tip="See what I built">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
@@ -594,7 +594,7 @@
       <div class="project-card reveal" data-tip="Google Authenticator compatible">
         <div class="project-num">Project 02</div>
         <h3 class="project-title">2FA Auth System</h3>
-        <p class="project-desc">Two-factor authentication backend using TOTP with QR code generation and Google Authenticator integration. Addresses OWASP A07 — broken authentication — at the implementation level.</p>
+        <p class="project-desc">Two-factor authentication backend using TOTP with QR code generation and Google Authenticator integration. Addresses OWASP A07, broken authentication, at the implementation level.</p>
         <div class="project-tags">
           <span class="tag">FastAPI</span><span class="tag">TOTP / pyotp</span><span class="tag">QR Codes</span><span class="tag">JWT</span><span class="tag">OWASP A07</span>
         </div>
@@ -614,7 +614,7 @@
       <div class="project-card reveal" data-tip="Actively in development">
         <div class="project-num">Project 03 — In Progress</div>
         <h3 class="project-title">Web Vulnerability Scanner</h3>
-        <p class="project-desc">Modular AppSec tool that scans a target URL and produces severity-rated findings across OWASP Top 10 categories. Backend complete for headers and SSL/TLS scanning. Open ports, SQLi, XSS, and directory traversal modules in progress.</p>
+        <p class="project-desc">Modular AppSec tool that scans a target URL and produces severity-rated findings across OWASP Top 10 categories. HTTP headers, SSL/TLS, port scanning, SQLi, and XSS complete. Directory traversal in progress.</p>
         <div style="margin-bottom:16px;">
           <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;">Completed so far</div>
           <div style="display:flex;flex-direction:column;gap:6px;">
@@ -622,18 +622,27 @@
               <span style="color:var(--accent2);font-size:11px;">✓</span> FastAPI backend skeleton + CORS
             </div>
             <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
-              <span style="color:var(--accent2);font-size:11px;">✓</span> HTTP security headers scanner (CSP, HSTS, X-Frame-Options, and more)
+              <span style="color:var(--accent2);font-size:11px;">✓</span> HTTP security headers scanner
             </div>
             <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
-              <span style="color:var(--accent2);font-size:11px;">✓</span> SSL/TLS certificate scanner (expiry, self-signed, weak protocol detection)
+              <span style="color:var(--accent2);font-size:11px;">✓</span> SSL/TLS certificate scanner
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
+              <span style="color:var(--accent2);font-size:11px;">✓</span> Port scanner (10 common ports)
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
+              <span style="color:var(--accent2);font-size:11px;">✓</span> SQL injection detection
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);">
+              <span style="color:var(--accent2);font-size:11px;">✓</span> XSS vulnerability detection
             </div>
             <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-muted);">
-              <span style="color:var(--text-muted);font-size:11px;">○</span> Port scanner, SQLi, XSS, directory traversal — upcoming
+              <span style="color:var(--text-muted);font-size:11px;">○</span> Directory traversal — upcoming
             </div>
           </div>
         </div>
         <div class="project-tags">
-          <span class="tag">FastAPI</span><span class="tag">Python</span><span class="tag">OWASP Top 10</span><span class="tag">SSL/TLS</span><span class="tag">HTTP Headers</span>
+          <span class="tag">FastAPI</span><span class="tag">Python</span><span class="tag">OWASP Top 10</span><span class="tag">SQLi</span><span class="tag">XSS</span><span class="tag">SSL/TLS</span>
         </div>
         <div class="project-links">
           <a href="https://github.com/ShashQuash/vulnerability-scanner" target="_blank" class="proj-link">
@@ -744,7 +753,7 @@
           <div class="exp-title" data-tip="Outsourced via SupportYourApp">Technical Support Agent — Netspark VPN</div>
           <div class="exp-company">SupportYourApp · Remote & Office · International Team</div>
           <ul class="exp-bullets">
-            <li>Resolved up to 100 user requests daily via Zoho CRM — subscriptions, device setup, and VPN connectivity issues</li>
+            <li>Resolved up to 100 user requests daily via Zoho CRM, subscriptions, device setup, and VPN connectivity issues</li>
             <li>Diagnosed installation errors and connection failures across Windows, macOS, Android and iOS</li>
             <li>Wrote structured escalation notes for the development team, reducing repeat contacts</li>
             <li>Operated in rotating shifts within a remote-first international team across English-speaking markets</li>
@@ -920,7 +929,7 @@ function drawMatrix() {
 setInterval(drawMatrix, 40);
 
 /* ─────────────────────────────────────────────
-   PIXEL CURSOR
+   PIXEL CURSOR + MOBILE TOUCH RIPPLE
 ───────────────────────────────────────────── */
 const pixelCursor = document.getElementById('cursor-pixel');
 const cursorArrow = document.getElementById('cursor-arrow');
@@ -932,8 +941,8 @@ function spawnRipple(x, y) {
   ['', 'ring2', 'ring3'].forEach(cls => {
     const r = document.createElement('div');
     r.className = 'cursor-ripple' + (cls ? ' ' + cls : '');
-    r.style.left = (x + 1) + 'px';
-    r.style.top  = (y + 1) + 'px';
+    r.style.left = x + 'px';
+    r.style.top  = y + 'px';
     document.body.appendChild(r);
     setTimeout(() => r.remove(), 800);
   });
@@ -959,6 +968,12 @@ if (!isTouchDevice) {
   document.addEventListener('mousedown', () => spawnRipple(mouseX, mouseY));
   document.addEventListener('mouseleave', () => { pixelCursor.style.opacity = '0'; });
   document.addEventListener('mouseenter', () => { pixelCursor.style.opacity = '1'; });
+} else {
+  // Mobile touch ripple
+  document.addEventListener('touchstart', e => {
+    const touch = e.touches[0];
+    spawnRipple(touch.clientX, touch.clientY);
+  }, { passive: true });
 }
 
 /* ─────────────────────────────────────────────
