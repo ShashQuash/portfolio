@@ -1,4 +1,4 @@
-# Portfolio — Shrish Arunesh
+# Portfolio - Shrish Arunesh
 
 Personal portfolio website built with HTML, CSS and JavaScript.
 
