@@ -14,6 +14,7 @@ Personal portfolio website built with HTML, CSS and JavaScript.
 | 2FA Auth System | [Demo](https://shashquash.github.io/2fa-auth-system/frontend) | [Repo](https://github.com/ShashQuash/2fa-auth-system) | FastAPI · TOTP · QR codes | ✅ Complete |
 | Web Vulnerability Scanner | [Demo](https://shashquash.github.io/vulnerability-scanner/frontend) | [Repo](https://github.com/ShashQuash/vulnerability-scanner) | FastAPI · SQLi · XSS · Traversal · SSL | ✅ Complete |
 | Animal Pose Estimation | [IEEE Paper](https://ieeexplore.ieee.org/document/11249593) | [Repo](https://github.com/ShashQuash/real-time-animal-pose-estimation) | YOLO · CVAT · Python | ✅ Complete |
+| More coming soon... | — | — | — | 🚧 |
 
 > The vulnerability scanner demo runs in simulation mode — results are pre-built examples showing how the tool works. Live scanning requires local backend deployment.
 
@@ -21,14 +22,20 @@ Personal portfolio website built with HTML, CSS and JavaScript.
 
 ## Tech
 
-HTML · CSS · Vanilla JavaScript · Formspree
+**Languages**
+Python · JavaScript · HTML · CSS · SQL
 
----
+**Frameworks & Libraries**
+FastAPI · pyotp · qrcode · bcrypt · SlowAPI · requests · certifi
 
-## Planned updates
+**Security**
+JWT · TOTP · OWASP Top 10 · SSL/TLS · Rate Limiting · Brute Force Defense · HTTP Security Headers · SQLi Detection · XSS Detection · Directory Traversal Detection
 
-- Deploy vulnerability scanner backend live
-- Connect contact form to a self-built FastAPI email backend
+**Tools & Platforms**
+Git · GitHub · GitHub Pages · Render · VS Code · Postman · CVAT · Google Colab · Zoho · Formspree
+
+**Concepts**
+REST APIs · Modular Architecture · Socket Programming · Supervised Learning · Computer Vision · Full Stack Deployment
 
 ---
 
