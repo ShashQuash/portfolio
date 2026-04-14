@@ -79,7 +79,7 @@
   }
   .nav-mobile a:hover { color: var(--purple-glow); }
 
-  /* ── Tooltip ── */
+
   [data-tip] { position: relative; }
   [data-tip]::before {
     content: attr(data-tip); position: absolute; top: calc(100% + 10px); left: 50%;
@@ -97,7 +97,7 @@
   }
   [data-tip]:hover::before, [data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-  /* ── Sections ── */
+
   section { position: relative; z-index: 1; }
   #hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 120px 48px 80px; }
   .hero-inner {
@@ -139,7 +139,7 @@
   }
   .btn-ghost:hover { border-color: var(--purple-light); color: var(--text); box-shadow: 0 0 24px rgba(124,58,237,0.2); transform: translateY(-2px); }
 
-  /* ── Terminal ── */
+
   .hero-terminal {
     background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
     padding: 24px; width: 280px; flex-shrink: 0;
@@ -158,7 +158,7 @@
   .term-cursor { display: inline-block; width: 8px; height: 14px; background: var(--purple-glow); vertical-align: text-bottom; animation: blink 1s step-end infinite; }
   @keyframes blink { 50% { opacity: 0; } }
 
-  /* ── Sections layout ── */
+
   .section-wrap { max-width: 1000px; margin: 0 auto; padding: 100px 48px; }
   .section-label {
     font-family: var(--mono); font-size: 11px; letter-spacing: 0.25em;
@@ -168,7 +168,7 @@
   .section-label::after { content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--border); }
   .section-title { font-family: var(--display); font-size: clamp(28px, 4vw, 44px); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 56px; }
 
-  /* ── Projects ── */
+
   .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
   .project-card {
     background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
@@ -196,7 +196,7 @@
   .proj-link:hover { color: var(--purple-glow); }
   .proj-link svg { width: 13px; height: 13px; }
 
-  /* ── Skills ── */
+
   .skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .skill-group {
     background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
@@ -213,12 +213,12 @@
   }
   .skill-tag:hover { border-color: var(--purple-light); color: var(--purple-glow); }
 
-  /* ── Typing ── */
+
   .typing-text { overflow: hidden; white-space: normal; border-right: 2px solid var(--purple-light); animation: blink-caret 0.8s step-end infinite; }
   .typing-text.done { border-right: none; }
   @keyframes blink-caret { 50% { border-color: transparent; } }
 
-  /* ── Experience / Research ── */
+
   .experience-list { display: flex; flex-direction: column; gap: 24px; }
   .exp-card {
     background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
@@ -233,7 +233,7 @@
   .exp-bullets li { font-size: 14px; color: var(--text-dim); line-height: 1.7; padding-left: 18px; position: relative; margin-bottom: 4px; }
   .exp-bullets li::before { content: '▸'; position: absolute; left: 0; color: var(--purple); font-size: 11px; top: 3px; }
 
-  /* ── Education ── */
+
   .edu-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
   .edu-degree-card {
     background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
@@ -255,7 +255,7 @@
   }
   .edu-module-tag:hover { border-color: var(--purple-light); color: var(--purple-glow); }
 
-  /* ── Certs ── */
+
   .cert-card-outer {
     background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
     padding: 32px; height: 100%; position: relative; overflow: hidden;
@@ -283,7 +283,7 @@
   .cert-status.green { color: var(--accent2); }
   .cert-status.amber { color: #f59e0b; }
 
-  /* ── Languages ── */
+
   .lang-row { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 32px; }
   .lang-pill {
     display: flex; align-items: center; gap: 8px; padding: 8px 18px; border-radius: 30px;
@@ -293,7 +293,7 @@
   .lang-pill:hover { border-color: var(--purple); }
   .lang-level { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--purple-light); padding: 2px 8px; background: rgba(124,58,237,0.12); border-radius: 10px; }
 
-  /* ── Contact ── */
+
   #contact { background: var(--bg2); }
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
   .contact-text { font-size: 15px; line-height: 1.8; color: var(--text-dim); margin-bottom: 32px; }
@@ -316,11 +316,11 @@
   .form-input:focus, .form-textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,58,237,0.12); }
   .form-textarea { resize: vertical; min-height: 110px; }
 
-  /* ── Footer ── */
+
   footer { text-align: center; padding: 40px; font-family: var(--mono); font-size: 11px; color: var(--text-muted); letter-spacing: 0.1em; border-top: 1px solid var(--border); position: relative; z-index: 1; }
   .glow-line { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, var(--purple), transparent); opacity: 0.4; position: relative; z-index: 1; }
 
-  /* ── Reveal ── */
+ 
   .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: none; }
 
@@ -991,7 +991,7 @@ function closeMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
 }
 
-// Build email at runtime to avoid Cloudflare obfuscation
+
 const _e = 'shrisharunesh' + '@' + 'gmail.com';
 const emailLink = document.getElementById('email-contact-link');
 const emailText = document.getElementById('email-contact-text');
